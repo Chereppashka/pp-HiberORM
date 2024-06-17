@@ -1,10 +1,21 @@
 package hiber.model;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "users")
 public class User {
+
+   @OneToOne(cascade = CascadeType.ALL)
+
+   private Car car;
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +36,21 @@ public class User {
       this.firstName = firstName;
       this.lastName = lastName;
       this.email = email;
+   }
+
+   public User(String firstName, String lastName, String email, Car car) {
+      this.car = car;
+      this.firstName = firstName;
+      this.lastName = lastName;
+      this.email = email;
+   }
+
+   public Car getCar() {
+      return car;
+   }
+
+   public void setCar(Car car) {
+      this.car = car;
    }
 
    public Long getId() {
@@ -57,5 +83,16 @@ public class User {
 
    public void setEmail(String email) {
       this.email = email;
+   }
+
+   @Override
+   public String toString() {
+      return "User{" +
+              "car=" + car +
+              ", id=" + id +
+              ", firstName='" + firstName + '\'' +
+              ", lastName='" + lastName + '\'' +
+              ", email='" + email + '\'' +
+              '}';
    }
 }
